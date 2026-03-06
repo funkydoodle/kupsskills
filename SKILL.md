@@ -1,380 +1,351 @@
 ---
-name: memory-architect
-description: >
-  Expert in designing and building persistent memory systems for AI agents and Claude-powered applications. Use this skill whenever a user wants to add memory to an AI product, build a knowledge graph, store and retrieve past behaviour patterns, track entity relationships over time, or make an agent "remember" across sessions. Triggers when users say things like: "I want my agent to remember", "build me a memory system", "knowledge graph for my app", "the bot should learn from past trades", "track wallet behaviour over time", "persistent context for my AI", or any request involving storing, retrieving, or reasoning over structured history. This skill classifies the memory type needed, designs the full architecture, and produces implementation-ready schemas and code.
+name: ui-ux-pro-max
+description: "UI/UX design intelligence. 50 styles, 21 palettes, 50 font pairings, 20 charts, 9 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui). Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, check UI/UX code. Projects: website, landing page, dashboard, admin panel, e-commerce, SaaS, portfolio, blog, mobile app, .html, .tsx, .vue, .svelte. Elements: button, modal, navbar, sidebar, card, table, form, chart. Styles: glassmorphism, claymorphism, minimalism, brutalism, neumorphism, bento grid, dark mode, responsive, skeuomorphism, flat design. Topics: color palette, accessibility, animation, layout, typography, font pairing, spacing, hover, shadow, gradient. Integrations: shadcn/ui MCP for component search and examples."
 ---
 
-# Memory Architect
+# UI/UX Pro Max - Design Intelligence
 
-You are a **Principal Memory Systems Engineer** specialising in persistent memory for AI agents. Your job is to understand what an agent needs to remember, classify the right memory paradigm, design the full architecture, and produce implementation-ready schemas and code — all stack-agnostic unless the user has a preference.
+Comprehensive design guide for web and mobile applications. Contains 50+ styles, 97 color palettes, 57 font pairings, 99 UX guidelines, and 25 chart types across 9 technology stacks. Searchable database with priority-based recommendations.
 
-**Prime Directive:** Memory is not a database. It's a *reasoning substrate*. Design for retrieval and inference first, storage second.
+## When to Apply
+
+Reference these guidelines when:
+- Designing new UI components or pages
+- Choosing color palettes and typography
+- Reviewing code for UX issues
+- Building landing pages or dashboards
+- Implementing accessibility requirements
+
+## Rule Categories by Priority
+
+| Priority | Category | Impact | Domain |
+|----------|----------|--------|--------|
+| 1 | Accessibility | CRITICAL | `ux` |
+| 2 | Touch & Interaction | CRITICAL | `ux` |
+| 3 | Performance | HIGH | `ux` |
+| 4 | Layout & Responsive | HIGH | `ux` |
+| 5 | Typography & Color | MEDIUM | `typography`, `color` |
+| 6 | Animation | MEDIUM | `ux` |
+| 7 | Style Selection | MEDIUM | `style`, `product` |
+| 8 | Charts & Data | LOW | `chart` |
+
+## Quick Reference
+
+### 1. Accessibility (CRITICAL)
+
+- `color-contrast` - Minimum 4.5:1 ratio for normal text
+- `focus-states` - Visible focus rings on interactive elements
+- `alt-text` - Descriptive alt text for meaningful images
+- `aria-labels` - aria-label for icon-only buttons
+- `keyboard-nav` - Tab order matches visual order
+- `form-labels` - Use label with for attribute
+
+### 2. Touch & Interaction (CRITICAL)
+
+- `touch-target-size` - Minimum 44x44px touch targets
+- `hover-vs-tap` - Use click/tap for primary interactions
+- `loading-buttons` - Disable button during async operations
+- `error-feedback` - Clear error messages near problem
+- `cursor-pointer` - Add cursor-pointer to clickable elements
+
+### 3. Performance (HIGH)
+
+- `image-optimization` - Use WebP, srcset, lazy loading
+- `reduced-motion` - Check prefers-reduced-motion
+- `content-jumping` - Reserve space for async content
+
+### 4. Layout & Responsive (HIGH)
+
+- `viewport-meta` - width=device-width initial-scale=1
+- `readable-font-size` - Minimum 16px body text on mobile
+- `horizontal-scroll` - Ensure content fits viewport width
+- `z-index-management` - Define z-index scale (10, 20, 30, 50)
+
+### 5. Typography & Color (MEDIUM)
+
+- `line-height` - Use 1.5-1.75 for body text
+- `line-length` - Limit to 65-75 characters per line
+- `font-pairing` - Match heading/body font personalities
+
+### 6. Animation (MEDIUM)
+
+- `duration-timing` - Use 150-300ms for micro-interactions
+- `transform-performance` - Use transform/opacity, not width/height
+- `loading-states` - Skeleton screens or spinners
+
+### 7. Style Selection (MEDIUM)
+
+- `style-match` - Match style to product type
+- `consistency` - Use same style across all pages
+- `no-emoji-icons` - Use SVG icons, not emojis
+
+### 8. Charts & Data (LOW)
+
+- `chart-type` - Match chart type to data type
+- `color-guidance` - Use accessible color palettes
+- `data-table` - Provide table alternative for accessibility
+
+## How to Use
+
+Search specific domains using the CLI tool below.
 
 ---
 
-## Two Memory Archetypes
+## Prerequisites
 
-Before any design work, classify which archetype (or combination) the use case requires.
+Check if Python is installed:
 
-### Archetype A — Knowledge Graph
-**Best for:** Entity-centric domains where relationships between things matter more than events.
-- Entities are first-class citizens (wallets, tokens, strategies, users)
-- Queries are relational: *"which wallets bought this token early and what were their returns?"*
-- The value is in traversing connections, not just finding facts
-- Data accumulates into a persistent world model
-
-**Signature signals:** wallets, tokens, smart money tracking, who-did-what-to-what
-
-### Archetype B — Episodic Memory
-**Best for:** Event-centric domains where learning from past situations drives future decisions.
-- Events are first-class citizens (trades, outcomes, market conditions)
-- Queries are situational: *"what happened last time conditions looked like this?"*
-- The value is in pattern retrieval across time
-- Data accumulates into a performance record
-
-**Signature signals:** strategy win/loss, trade history, "what worked before", condition-outcome pairs
-
-### Archetype C — Hybrid
-Both archetypes active. Entities exist in a graph; events are stored as episodes linked to those entities. Use when the system needs to ask both *"who is this wallet?"* (graph) and *"what happened last time this wallet entered a token at this mcap?"* (episodic).
-
----
-
-## The 5-Phase Protocol
-
----
-
-### PHASE 0 — INTAKE & CLASSIFICATION
-*"Know what kind of memory you're building before you touch a schema."*
-
-**Goal:** Understand the use case, classify the archetype, propose the architecture.
-
-**Actions:**
-1. Ask the user to describe what the agent needs to remember and why
-2. Identify the primary entities (what are the nouns in their system?)
-3. Identify the primary events (what are the verbs / state changes?)
-4. Determine query patterns: what questions will the agent ask of memory?
-5. Classify: Graph / Episodic / Hybrid
-
-**Deliverable — Classification Report:**
-```
-## Memory Classification
-
-**Use case:** [1-2 sentence description]
-
-**Archetype:** [Graph / Episodic / Hybrid]
-
-**Entities identified:** [List of things that persist and have identity]
-**Events identified:** [List of things that happen and have outcomes]
-
-**Core query patterns:**
-- [Question the agent will ask memory, #1]
-- [Question the agent will ask memory, #2]
-- [Question the agent will ask memory, #3]
-
-**Why this archetype:** [2-3 sentences on why this fits]
+```bash
+python3 --version || python --version
 ```
 
-Present this and get confirmation before proceeding.
+If Python is not installed, install it based on user's OS:
 
----
-
-### PHASE 1 — SCHEMA DESIGN
-*"Design the memory structure before the retrieval layer."*
-
-#### For Knowledge Graph (Archetype A)
-
-Define nodes, edges, and properties:
-
-```
-## Node Types
-
-### [EntityType] (e.g. Wallet)
-- id: unique identifier
-- [property]: [type] — [what it represents]
-- [property]: [type]
-- created_at: timestamp
-- updated_at: timestamp
-
-### [EntityType] (e.g. Token)
-- id: unique identifier
-- [property]: [type]
-
-## Edge Types (Relationships)
-
-### [RELATIONSHIP_NAME] (e.g. WALLET → APE_INTO → TOKEN)
-- Properties on the edge:
-  - [property]: [type] — (e.g. amount_usd, entry_mcap, timestamp)
-  - [property]: [type]
-
-### [RELATIONSHIP_NAME]
-- Properties: [...]
-
-## Derived/Computed Properties
-Properties that are calculated from traversal rather than stored directly:
-- [e.g. wallet_win_rate]: calculated by traversing all APE_INTO edges and checking token outcomes
+**macOS:**
+```bash
+brew install python3
 ```
 
-#### For Episodic Memory (Archetype B)
-
-Define the episode schema:
-
-```
-## Episode Schema
-
-### Episode
-- id: unique identifier
-- timestamp: when this happened
-- context: [structured object describing the situation at the time]
-  - [field]: [type] — (e.g. market_condition, volume_24h, sentiment_score)
-- action: [what the agent did or what happened]
-  - [field]: [type] — (e.g. strategy_used, position_size, direction)
-- outcome: [what resulted]
-  - [field]: [type] — (e.g. pnl_pct, result, resolution_time)
-- tags: [string array for retrieval — key conditions, strategy names, market types]
-- embedding_text: [the string that gets embedded for semantic search — auto-generated from context + action]
-
-## Episode Indexing Strategy
-- Primary retrieval: semantic similarity on embedding_text
-- Secondary filters: timestamp range, outcome.result, tags
-- Temporal decay weight: [how much to discount older episodes — e.g. linear over 90 days]
+**Ubuntu/Debian:**
+```bash
+sudo apt update && sudo apt install python3
 ```
 
-#### For Hybrid (Archetype C)
-
-Both schemas above, plus a linkage layer:
-```
-## Linkage
-Episodes reference entities by ID:
-- episode.entities: [{ type: "Wallet", id: "0x..." }, { type: "Token", id: "SOL_MINT" }]
-
-Graph edges can carry episode_ids:
-- WALLET → APE_INTO → TOKEN edge includes: { episode_id: "ep_123" }
+**Windows:**
+```powershell
+winget install Python.Python.3.12
 ```
 
 ---
 
-### PHASE 2 — READ LAYER DESIGN
-*"Memory is only useful if the agent can query it correctly."*
+## How to Use This Skill
 
-**Goal:** Design exactly how the agent retrieves memory at inference time.
+When user requests UI/UX work (design, build, create, implement, review, fix, improve), follow this workflow:
 
-#### Query Patterns — for each use case, define:
+### Step 1: Analyze User Requirements
 
-```
-### Query: [Name] (e.g. "Smart Wallet Lookup")
-- **Trigger:** [When does the agent invoke this query?]
-- **Input:** [What does the agent pass in?]
-- **Retrieval method:** [Graph traversal / semantic search / structured filter / hybrid]
-- **Output:** [What gets injected into the agent's context?]
-- **Max tokens budget:** [How much context space this should consume]
-- **Pseudo-query:**
-  [Graph: MATCH (w:Wallet)-[r:APE_INTO]->(t:Token {id: $token_id}) RETURN w, r ORDER BY r.timestamp DESC]
-  [Episodic: semantic_search(embedding, top_k=5, filter={outcome.result: "win"})]
-```
+Extract key information from user request:
+- **Product type**: SaaS, e-commerce, portfolio, dashboard, landing page, etc.
+- **Style keywords**: minimal, playful, professional, elegant, dark mode, etc.
+- **Industry**: healthcare, fintech, gaming, education, etc.
+- **Stack**: React, Vue, Next.js, or default to `html-tailwind`
 
-#### Context Injection Strategy
+### Step 2: Generate Design System (REQUIRED)
 
-How retrieved memories get formatted and injected into the agent's prompt:
+**Always start with `--design-system`** to get comprehensive recommendations with reasoning:
 
-```
-## Memory Injection Template
-
-<memory>
-  <entities>
-    [Structured summary of relevant entities and their relationships]
-  </entities>
-  <episodes>
-    [Top N relevant past episodes, formatted as: WHEN | CONTEXT | ACTION | OUTCOME]
-  </episodes>
-  <patterns>
-    [Derived insights: win rates, common conditions, notable outliers]
-  </patterns>
-</memory>
+```bash
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<product_type> <industry> <keywords>" --design-system [-p "Project Name"]
 ```
 
-Rules for injection:
-- Always cap memory context at [X] tokens (recommend: 20% of context window)
-- Rank by recency × relevance — don't just dump the most recent
-- Summarise when episode count > threshold; don't inject raw data
-- Flag low-confidence memories (thin data, contradictory signals)
+This command:
+1. Searches 5 domains in parallel (product, style, color, landing, typography)
+2. Applies reasoning rules from `ui-reasoning.csv` to select best matches
+3. Returns complete design system: pattern, style, colors, typography, effects
+4. Includes anti-patterns to avoid
+
+**Example:**
+```bash
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "beauty spa wellness service" --design-system -p "Serenity Spa"
+```
+
+### Step 3: Supplement with Detailed Searches (as needed)
+
+After getting the design system, use domain searches to get additional details:
+
+```bash
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<keyword>" --domain <domain> [-n <max_results>]
+```
+
+**When to use detailed searches:**
+
+| Need | Domain | Example |
+|------|--------|---------|
+| More style options | `style` | `--domain style "glassmorphism dark"` |
+| Chart recommendations | `chart` | `--domain chart "real-time dashboard"` |
+| UX best practices | `ux` | `--domain ux "animation accessibility"` |
+| Alternative fonts | `typography` | `--domain typography "elegant luxury"` |
+| Landing structure | `landing` | `--domain landing "hero social-proof"` |
+
+### Step 4: Stack Guidelines (Default: html-tailwind)
+
+Get implementation-specific best practices. If user doesn't specify a stack, **default to `html-tailwind`**.
+
+```bash
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<keyword>" --stack html-tailwind
+```
+
+Available stacks: `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`, `swiftui`, `react-native`, `flutter`, `shadcn`
 
 ---
 
-### PHASE 3 — WRITE LAYER DESIGN
-*"Memory is only as good as what gets written into it."*
+## Search Reference
 
-**Goal:** Design how memory gets populated, updated, and maintained over time.
+### Available Domains
 
-#### Write Triggers
+| Domain | Use For | Example Keywords |
+|--------|---------|------------------|
+| `product` | Product type recommendations | SaaS, e-commerce, portfolio, healthcare, beauty, service |
+| `style` | UI styles, colors, effects | glassmorphism, minimalism, dark mode, brutalism |
+| `typography` | Font pairings, Google Fonts | elegant, playful, professional, modern |
+| `color` | Color palettes by product type | saas, ecommerce, healthcare, beauty, fintech, service |
+| `landing` | Page structure, CTA strategies | hero, hero-centric, testimonial, pricing, social-proof |
+| `chart` | Chart types, library recommendations | trend, comparison, timeline, funnel, pie |
+| `ux` | Best practices, anti-patterns | animation, accessibility, z-index, loading |
+| `react` | React/Next.js performance | waterfall, bundle, suspense, memo, rerender, cache |
+| `web` | Web interface guidelines | aria, focus, keyboard, semantic, virtualize |
+| `prompt` | AI prompts, CSS keywords | (style name) |
 
-For each memory type, define what event causes a write:
+### Available Stacks
 
-```
-### Write Trigger: [Name] (e.g. "Trade Closed")
-- **Event:** [What happens in the system]
-- **Data captured:** [Exactly what fields get written]
-- **Entity resolution:** [How do we know if this is a new entity or an existing one?]
-- **Deduplication rule:** [How to prevent duplicate memories of the same event]
-- **Write timing:** [Synchronous / async / batched]
-```
-
-#### Memory Lifecycle Operations
-
-```
-## CREATE
-New entity or episode is observed — write in full.
-- Entity: upsert by natural key (wallet address, token mint, etc.)
-- Episode: always create new (events are immutable)
-
-## UPDATE
-New information about an existing entity arrives:
-- Update mutable properties (mcap, volume, last_seen)
-- Append to relationship history, don't overwrite
-- Log the update with timestamp for auditability
-
-## ENRICH
-After enough episodes accumulate, compute derived facts:
-- win_rate, avg_return, best_condition, worst_condition
-- Store these as computed properties on entities or as summary episodes
-- Re-run enrichment on a schedule or after N new episodes
-
-## FORGET / DECAY
-Not all memory should persist equally:
-- Time-decay weight: older episodes have lower retrieval weight
-- Explicit pruning: remove episodes older than [threshold] if superseded by enriched summaries
-- Contradiction handling: if new fact contradicts stored fact, flag for review rather than silently overwrite
-```
+| Stack | Focus |
+|-------|-------|
+| `html-tailwind` | Tailwind utilities, responsive, a11y (DEFAULT) |
+| `react` | State, hooks, performance, patterns |
+| `nextjs` | SSR, routing, images, API routes |
+| `vue` | Composition API, Pinia, Vue Router |
+| `svelte` | Runes, stores, SvelteKit |
+| `swiftui` | Views, State, Navigation, Animation |
+| `react-native` | Components, Navigation, Lists |
+| `flutter` | Widgets, State, Layout, Theming |
+| `shadcn` | shadcn/ui components, theming, forms, patterns |
 
 ---
 
-### PHASE 4 — BUILD
-*"Architecture is a promise. Code is the proof."*
+## Example Workflow
 
-**Goal:** Produce implementation-ready schemas and code. Stack-agnostic — will adapt to whatever the user is running.
+**User request:** "Build a landing page for a professional skincare service"
 
-#### What gets produced:
+### Step 1: Analyze Requirements
+- Product type: Beauty/Spa service
+- Style keywords: elegant, professional, soft
+- Industry: Beauty/Wellness
+- Stack: html-tailwind (default)
 
-**Schema definitions** — table structures, graph schemas, or document shapes depending on the store chosen.
+### Step 2: Generate Design System (REQUIRED)
 
-**Write functions** — the functions that create/update entities and episodes when events occur.
-
-**Read functions** — the query functions the agent calls at inference time.
-
-**Memory injection helper** — the function that formats retrieved memory into the prompt injection template.
-
-**Enrichment job** — the background process that computes derived properties.
-
-#### Stack Selection Guide (agnostic recommendations)
-
-If the user hasn't chosen a stack, guide them with:
-
-```
-## Stack Decision
-
-### Graph Store options:
-- PostgreSQL + recursive CTEs: good enough for moderate graph complexity, you probably already have it
-- Neo4j / Memgraph: purpose-built, best for deep traversal, extra infra cost
-- Supabase (Postgres): viable for graph via self-joins + jsonb, plus vector via pgvector
-
-### Episodic / Vector Store options:
-- pgvector (Postgres extension): keeps everything in one DB, good for moderate scale
-- Pinecone / Qdrant / Weaviate: purpose-built vector DBs, better at scale
-- Supabase: pgvector built-in, easiest if already on Supabase
-
-### Hybrid recommendation (if undecided):
-Supabase (Postgres + pgvector) handles both archetypes in one system:
-- Entities/relationships → relational tables with foreign keys
-- Episodes → table with vector column for semantic search
-- No extra infra, SQL familiarity, scales to meaningful volume before needing dedicated graph/vector DB
+```bash
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "beauty spa wellness service elegant" --design-system -p "Serenity Spa"
 ```
 
-Once stack is confirmed, write production-ready code for each component.
+**Output:** Complete design system with pattern, style, colors, typography, effects, and anti-patterns.
+
+### Step 3: Supplement with Detailed Searches (as needed)
+
+```bash
+# Get UX guidelines for animation and accessibility
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "animation accessibility" --domain ux
+
+# Get alternative typography options if needed
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "elegant luxury serif" --domain typography
+```
+
+### Step 4: Stack Guidelines
+
+```bash
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "layout responsive form" --stack html-tailwind
+```
+
+**Then:** Synthesize design system + detailed searches and implement the design.
 
 ---
 
-### PHASE 5 — MEMORY HEALTH SYSTEM
-*"A memory system that can't forget or correct itself becomes a liability."*
+## Output Formats
 
-**Goal:** Design the ongoing maintenance layer so memory stays accurate, relevant, and lean.
+The `--design-system` flag supports two output formats:
 
-```
-## Memory Health Checklist
+```bash
+# ASCII box (default) - best for terminal display
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "fintech crypto" --design-system
 
-### Staleness Detection
-- Which entities haven't been updated in > [threshold]?
-- Flag stale entities for re-verification or decay-weighting
-
-### Contradiction Monitoring
-- When a new write conflicts with stored data, log the conflict
-- Don't silently overwrite — surface to agent or operator for resolution
-
-### Enrichment Cadence
-- After N new episodes: recompute derived stats (win_rate, avg_return)
-- On schedule (daily/weekly): rebuild summary episodes from raw history
-
-### Pruning Strategy
-- Raw episodes older than [X] days: summarise into compressed memory, remove raw
-- Entities with zero relationships: candidate for pruning
-- Low-signal episodes (outcome: neutral, context: thin): lower retrieval weight first, prune after [Y] days
-
-### Memory Audit Log
-Every write, update, and delete records:
-- what changed
-- why (triggered by which event)
-- who/what system made the change
-- previous value
-
-This is your debuggability layer — essential when the agent starts behaving unexpectedly.
+# Markdown - best for documentation
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "fintech crypto" --design-system -f markdown
 ```
 
 ---
 
-## Domain-Specific Patterns
+## Tips for Better Results
 
-### Pattern: Smart Wallet Graph (Nox Ignition style)
-
-```
-Nodes: Wallet, Token, Deployer
-Edges:
-  (Wallet)-[:APE_INTO {amount, entry_mcap, timestamp}]->(Token)
-  (Wallet)-[:DEPLOYED]->(Token)
-  (Wallet)-[:COPY_TRADES]->(Wallet)
-
-Key queries:
-  - "Which wallets entered this token in the first 5 minutes?"
-  - "What's the win rate of wallets that entered at <$500k mcap?"
-  - "Which wallets overlap between this token's buyers and known smart money?"
-
-Enrichment:
-  - wallet.win_rate: % of APE_INTO edges where token peaked > 2x entry
-  - wallet.avg_multiple: mean peak / entry_mcap across all positions
-  - wallet.smart_money_score: composite of win_rate, avg_multiple, early_entry_rate
-```
-
-### Pattern: Strategy Episodic Memory (Prediction Market Bot style)
-
-```
-Episode fields:
-  context: { market_type, time_to_resolution, current_probability, volume_24h, momentum_signal }
-  action: { strategy, position_size_pct, direction, reasoning }
-  outcome: { pnl_pct, resolved_correctly, resolution_time, market_moved }
-
-Key queries:
-  - "What strategy worked when probability was 60-70% with high volume?"
-  - "What's the win rate on momentum plays vs. mean-reversion plays?"
-  - "Show me all losing trades on binary markets with <6h to resolution"
-
-Enrichment:
-  - strategy.win_rate_by_condition: pre-computed per strategy × market_condition bucket
-  - Summary episodes: "Across 50 momentum trades in Q1, win rate was 58%, avg return 12%"
-```
+1. **Be specific with keywords** - "healthcare SaaS dashboard" > "app"
+2. **Search multiple times** - Different keywords reveal different insights
+3. **Combine domains** - Style + Typography + Color = Complete design system
+4. **Always check UX** - Search "animation", "z-index", "accessibility" for common issues
+5. **Use stack flag** - Get implementation-specific best practices
+6. **Iterate** - If first search doesn't match, try different keywords
 
 ---
 
-## Tone & Delivery Guidelines
+## Common Rules for Professional UI
 
-- **Classify before designing.** Never skip Phase 0 — the wrong archetype produces a system that's technically correct but practically useless.
-- **Query patterns drive schema.** Design the questions first, then work backwards to what the schema must support.
-- **Be concrete about retrieval.** "Semantic search" is not enough — specify top_k, filters, decay weights, injection format.
-- **Write production code, not pseudocode.** If the user is at the build phase, produce real, runnable implementations.
-- **Flag when data volume assumptions matter.** A schema that works at 1,000 episodes may need indexing rethought at 1,000,000.
+These are frequently overlooked issues that make UI look unprofessional:
+
+### Icons & Visual Elements
+
+| Rule | Do | Don't |
+|------|----|----- |
+| **No emoji icons** | Use SVG icons (Heroicons, Lucide, Simple Icons) | Use emojis like 🎨 🚀 ⚙️ as UI icons |
+| **Stable hover states** | Use color/opacity transitions on hover | Use scale transforms that shift layout |
+| **Correct brand logos** | Research official SVG from Simple Icons | Guess or use incorrect logo paths |
+| **Consistent icon sizing** | Use fixed viewBox (24x24) with w-6 h-6 | Mix different icon sizes randomly |
+
+### Interaction & Cursor
+
+| Rule | Do | Don't |
+|------|----|----- |
+| **Cursor pointer** | Add `cursor-pointer` to all clickable/hoverable cards | Leave default cursor on interactive elements |
+| **Hover feedback** | Provide visual feedback (color, shadow, border) | No indication element is interactive |
+| **Smooth transitions** | Use `transition-colors duration-200` | Instant state changes or too slow (>500ms) |
+
+### Light/Dark Mode Contrast
+
+| Rule | Do | Don't |
+|------|----|----- |
+| **Glass card light mode** | Use `bg-white/80` or higher opacity | Use `bg-white/10` (too transparent) |
+| **Text contrast light** | Use `#0F172A` (slate-900) for text | Use `#94A3B8` (slate-400) for body text |
+| **Muted text light** | Use `#475569` (slate-600) minimum | Use gray-400 or lighter |
+| **Border visibility** | Use `border-gray-200` in light mode | Use `border-white/10` (invisible) |
+
+### Layout & Spacing
+
+| Rule | Do | Don't |
+|------|----|----- |
+| **Floating navbar** | Add `top-4 left-4 right-4` spacing | Stick navbar to `top-0 left-0 right-0` |
+| **Content padding** | Account for fixed navbar height | Let content hide behind fixed elements |
+| **Consistent max-width** | Use same `max-w-6xl` or `max-w-7xl` | Mix different container widths |
+
+---
+
+## Pre-Delivery Checklist
+
+Before delivering UI code, verify these items:
+
+### Visual Quality
+- [ ] No emojis used as icons (use SVG instead)
+- [ ] All icons from consistent icon set (Heroicons/Lucide)
+- [ ] Brand logos are correct (verified from Simple Icons)
+- [ ] Hover states don't cause layout shift
+- [ ] Use theme colors directly (bg-primary) not var() wrapper
+
+### Interaction
+- [ ] All clickable elements have `cursor-pointer`
+- [ ] Hover states provide clear visual feedback
+- [ ] Transitions are smooth (150-300ms)
+- [ ] Focus states visible for keyboard navigation
+
+### Light/Dark Mode
+- [ ] Light mode text has sufficient contrast (4.5:1 minimum)
+- [ ] Glass/transparent elements visible in light mode
+- [ ] Borders visible in both modes
+- [ ] Test both modes before delivery
+
+### Layout
+- [ ] Floating elements have proper spacing from edges
+- [ ] No content hidden behind fixed navbars
+- [ ] Responsive at 375px, 768px, 1024px, 1440px
+- [ ] No horizontal scroll on mobile
+
+### Accessibility
+- [ ] All images have alt text
+- [ ] Form inputs have labels
+- [ ] Color is not the only indicator
+- [ ] `prefers-reduced-motion` respected
